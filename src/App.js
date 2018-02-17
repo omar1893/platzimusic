@@ -14,9 +14,10 @@ import {
   FlatList
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import ArtistBox from './artistBox'
-import ArtistList from './artistList'
+import HomeView from './home-view'
+import ArtistDetailView from './artistDetail'
+import LoginView from './loginView'
+import { Router, Scene, Stack } from "react-native-router-flux";
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' +
@@ -28,11 +29,14 @@ import ArtistList from './artistList'
 export default class App extends Component<{}> {
 
   render() {
-
     return (
-      <View style={styles.container}>
-        <ArtistList/>
-      </View>
+      <Router>
+        <Stack key="root">
+          <Scene key="login" component={LoginView} hideNavBar />
+          <Scene key="home" component={HomeView} hideNavBar />
+          <Scene key="artistDetail" component={ArtistDetailView} title="Comentarios" hideNavBar={false} />
+        </Stack>
+      </Router>
     );
   }
 }

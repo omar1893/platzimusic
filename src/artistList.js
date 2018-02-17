@@ -8,87 +8,57 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 
 import ArtistBox from './artistBox'
-
+import { Actions } from "react-native-router-flux";
 
 export default class ArtistList extends Component<{}> {
 
+  state = {
+    artists: []
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps !== this.props.artists) {
+      this.state.artists = newProps.artists
+    }
+    else {
+
+    }
+  }
+
+  handlePress(artist) {
+    // console.warn('Click', artist)
+    Actions.artistDetail({ artist: artist })
+  }
+
   render() {
-
-    const artist = [
-      {
-        'image': 'http://www.billboard.com/files/media/beatles-sgt-peppers-07-billboard-1548.jpg',
-        'name': "The Beatles",
-        'likes': 200,
-      },
-      {
-        'image': 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Trs_20150623_milwaukee_jp_105.jpg',
-        'name': "Rolling Stones",
-        'likes': 200,
-      },
-      {
-        'image': 'http://www.revistapym.com.co/wp-content/uploads/2016/11/guns_and_roses_historia_logo.png',
-        'name': "Guns N Roses",
-        'likes': 200,
-      },
-      {
-        'image': 'http://plus.cusica.com/wp-content/uploads/2017/04/Green-Day-cusica-plus.jpg',
-        'name': "Green Day",
-        'likes': 200,
-      },
-      {
-        'image': 'http://www.billboard.com/files/media/beatles-sgt-peppers-07-billboard-1548.jpg',
-        'name': "The Beatles",
-        'likes': 200,
-      },
-      {
-        'image': 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Trs_20150623_milwaukee_jp_105.jpg',
-        'name': "Rolling Stones",
-        'likes': 200,
-      },
-      {
-        'image': 'http://www.revistapym.com.co/wp-content/uploads/2016/11/guns_and_roses_historia_logo.png',
-        'name': "Guns N Roses",
-        'likes': 200,
-      },
-      {
-        'image': 'http://plus.cusica.com/wp-content/uploads/2017/04/Green-Day-cusica-plus.jpg',
-        'name': "Green Day",
-        'likes': 200,
-      },
-      {
-        'image': 'http://www.billboard.com/files/media/beatles-sgt-peppers-07-billboard-1548.jpg',
-        'name': "The Beatles",
-        'likes': 200,
-      },
-      {
-        'image': 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Trs_20150623_milwaukee_jp_105.jpg',
-        'name': "Rolling Stones",
-        'likes': 200,
-      },
-      {
-        'image': 'http://www.revistapym.com.co/wp-content/uploads/2016/11/guns_and_roses_historia_logo.png',
-        'name': "Guns N Roses",
-        'likes': 200,
-      },
-      {
-        'image': 'http://plus.cusica.com/wp-content/uploads/2017/04/Green-Day-cusica-plus.jpg',
-        'name': "Green Day",
-        'likes': 200,
-      },
-    ]
-
-
     return (
-        <FlatList
-          data={artist}
-          renderItem={({ item }) => <ArtistBox artist={item}/>}
-          keyExtractor={item => item.name}
-          />
+      <FlatList
+        data={this.state.artists}
+        renderItem={({ item }) =>
+          <TouchableOpacity onPress={() => this.handlePress(item)}>
+            <ArtistBox artist={item} />
+          </TouchableOpacity>}
+        keyExtractor={item => item.name}
+
+      />
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgray',
+    paddingTop: 50,
+  },
+});
 
